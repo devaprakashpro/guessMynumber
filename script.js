@@ -4,128 +4,136 @@ console.log(' the js are working good');
 // import to the web page docment content in the web page
 
 const clickbtn = document.querySelector('.check');
-// const flipbox = document.querySelector('bodyofcon');
+
 const score = document.querySelector('.score');
 const hscore = document.querySelector('.h-score');
 const result = document.querySelector('.result');
 
-// const checkfun = function () {
-//   if (!inputfild) {
-//     alert('plase enter the number in input box');
-//     console.log(inputfild);
-//   } else {
-//     if (inputfild <= 20 && inputfild >= 1) {
-//       console.log(`the value is ${inputfild}`);
-//       alert(`the value is ${inputfild}`);
-//     } else {
-//       alert(' your value not between in 1 to 20');
-//       console.log(typeof inputfild);
-//     }
-//   }
-// };
 let gscore = 20;
 let highscore = 0;
 let oldscore = 0;
 let secretNumber = Math.trunc(Math.random() * 20 + 1);
 console.log(gscore);
-console.log(`your secret number was da funny ${secretNumber}`);
+console.log(`your secret number was ${secretNumber}`);
 
 document.querySelector('.score').textContent = gscore;
 document.querySelector('.hs-n').textContent = highscore;
 
 console.log(secretNumber);
 
-// btn click funtuon
-// -----------------------------------------------------------
-// inputfild.value = 100;
-// clickevent pass in check btn
+// dom line optimization
+// name of logo
+const nameoflogo = function (nameoflogomsg) {
+  document.querySelector('.nameoflogo').textContent = nameoflogomsg;
+};
 
+const bodyclr = function (bodycolor) {
+  document.querySelector('body').style.backgroundColor = bodycolor;
+};
+const resultchange = function (resultparameter) {
+  document.querySelector('.result').textContent = resultparameter;
+};
+const scoregs = function (scoreparameter) {
+  document.querySelector('.score').textContent = scoreparameter;
+};
+// ---------------------------------------------------------------------------------------------
 clickbtn.addEventListener('click', function () {
   const inputfild = Number(document.querySelector('.inputfild').value);
-  // document.querySelector('.bodyofcon').textContent = secretNumber;
 
   // start check number or not there
   if (!inputfild) {
     // if number is not there
-    document.querySelector('.result').textContent =
-      'Please Enter your guess number';
+    // document.querySelector('.result').textContent =
+    //   'Please Enter your guess number';
+    resultchange('Please Enter the guess Number');
 
     // if number is there check between 1 to 20
   } else if (inputfild > 20 || inputfild < 1) {
-    // is not there 1 to 20 ex:21.. sumthing
-    // animaion for wrong
-    document.querySelector('body').style.backgroundColor = 'red';
-    document.querySelector('.result').textContent =
-      'GUESS THE NUMBER BETWEEN 1 TO 20 ';
-    document.querySelector('.nameoflogo').textContent = 'try again ... ';
-  } else {
+    // document.querySelector('body').style.backgroundColor = 'red';
+    bodyclr('red');
+    resultchange('GUESS THE NUMBER BETWEEN 1 TO 20');
+    // document.querySelector('.result').textContent =
+    //   'GUESS THE NUMBER BETWEEN 1 TO 20 ';
+    // document.querySelector('.nameoflogo').textContent = 'try again ... ';
+    nameoflogo('Try again');
+  } else if (secretNumber === inputfild) {
     // in the number was === to correct that
-    if (secretNumber === inputfild) {
-      document.querySelector('.result').textContent = 'WOW CORRECT NUMBER....';
-      document.querySelector('.nameoflogo').textContent = 'SUPER .. GOOD';
-      gscore += 5;
-      document.querySelector('.bodyofcon').textContent = secretNumber;
-      document.querySelector('.score').textContent = gscore;
 
-      secretNumber = Math.trunc(Math.random() * 20 + 1);
+    // document.querySelector('.result').textContent = 'WOW CORRECT NUMBER....';
+    resultchange('WOW CORRECT NUMBER ');
+    nameoflogo('SUPER . .. GOOD ');
 
-      console.log(`your secret number ccccc was ${secretNumber}`);
+    // document.querySelector('.nameoflogo').textContent = 'SUPER .. GOOD';
+    gscore += 5;
+    document.querySelector('.bodyofcon').textContent = secretNumber;
+    // bodyclr(secretNumber);
+    // document.querySelector('.score').textContent = gscore;
+    scoregs(gscore);
 
-      // animaion for correct
-      document.querySelector('body').style.backgroundColor = 'green';
-      // -------------------------------high score process---------
-      highscore = gscore;
-      console.log(`your high score is ${highscore},${gscore}`);
+    secretNumber = Math.trunc(Math.random() * 20 + 1);
 
-      if (highscore < oldscore) {
-      } else {
-        oldscore = highscore;
-      }
+    console.log(`your secret number ccccc was ${secretNumber}`);
 
-      highscore = oldscore;
-      document.querySelector('.hs-n').textContent = highscore;
+    // animaion for correct
+    // document.querySelector('body').style.backgroundColor = 'green';
+    bodyclr('green');
+    // -------------------------------high score process---------
+    highscore = gscore;
+    console.log(`your high score is ${highscore},${gscore}`);
+
+    if (highscore < oldscore) {
+    } else {
+      oldscore = highscore;
     }
 
-    // if the number was wrong low than number responce
-    else if (secretNumber > inputfild) {
-      document.querySelector('.result').textContent = 'Too Low  number ..';
-      document.querySelector('.nameoflogo').textContent = 'Too Low';
+    highscore = oldscore;
+    document.querySelector('.hs-n').textContent = highscore;
+  } else if (secretNumber !== inputfild) {
+    if (inputfild > 1) {
+      console.log('score is possitive');
+      nameoflogo(secretNumber > inputfild ? 'TOO Low ' : 'Too High');
+      // document.querySelector('.nameoflogo').textContent =
+      //   secretNumber > inputfild ? 'Too Low' : 'Too High';
+      gscore--;
+      resultchange(
+        secretNumber > inputfild ? 'incress the count' : 'decreass the count'
+      );
+
+      // document.querySelector('.result').textContent =
+      //   secretNumber > inputfild ? 'incress the count' : 'decreass the count';
+      // document.querySelector('.score').textContent = gscore;
+      scoregs(gscore);
+      // color chaning user expreance in  the game
+      // document.querySelector('body').style.backgroundColor = 'red';
+      bodyclr('red');
+    } else {
+      // document.querySelector('.result').textContent = 'WRONG ANSWER ..';
+      resultchange('THE NUMBER WAS WRONG ANSWER..');
       gscore -= 1;
-      document.querySelector('.score').textContent = gscore;
+      // document.querySelector('.score').textContent = gscore;
+      scoregs(gscore);
+      // document.querySelector('.nameoflogo').textContent =
+      //   'THE  NUMBER WAS WRONG ..';daw
+      nameoflogo('THE NUMBER WAS WRONG ..');
       // animaion for wrong
-      document.querySelector('body').style.backgroundColor = 'red';
-    }
-    // if the number high than responce
-    else if (secretNumber < inputfild) {
-      document.querySelector('.result').textContent = 'TOO HIGH .. NUMBER .. ';
-      document.querySelector('.nameoflogo').textContent =
-        'ENTER THE LOW NUMBER ..';
-      gscore -= 1;
-      document.querySelector('.score').textContent = gscore;
-      // animaion for wrong
-      document.querySelector('body').style.backgroundColor = 'red';
-    }
-    // it is the wrong number
-    else {
-      document.querySelector('.result').textContent = 'WRONG ANSWER ..';
-      gscore -= 1;
-      document.querySelector('.score').textContent = gscore;
-      document.querySelector('.nameoflogo').textContent =
-        'THE  NUMBER WAS WRONG ..';
-      // animaion for wrong
-      document.querySelector('body').style.backgroundColor = 'red';
+      // document.querySelector('body').style.backgroundColor = 'red';
+      bodyclr('red');
     }
 
     // score low ---------
 
     if (gscore <= 0) {
-      document.querySelector('.result').textContent =
-        'Not eligible for Play sorry..';
+      // document.querySelector('.result').textContent =
+      //   'Not eligible for Play sorry..';
+      resultchange('Not eligible for Play sorry..');
       gscore = 0;
-      document.querySelector('.score').textContent = gscore;
-      document.querySelector('.nameoflogo').textContent = 'NO SCORE TICKET..';
+      // document.querySelector('.score').textContent = gscore;
+      scoregs(gscore);
+      // document.querySelector('.nameoflogo').textContent = 'NO SCORE TICKET..';
+      nameoflogo('No score Ticket');
       // animaion for wrong
-      document.querySelector('body').style.backgroundColor = 'yellow';
+      // document.querySelector('body').style.backgroundColor = 'yellow';
+      bodyclr('yellow');
     }
   }
   console.log(gscore);
@@ -137,23 +145,31 @@ document.querySelector('.again').addEventListener('click', function () {
     gscore = 20;
 
     secretNumber = Math.trunc(Math.random() * 20 + 1);
-    document.querySelector('.nameoflogo').textContent = 'GUESS MY NUMBER BOSS';
-    document.querySelector('.result').textContent = 'Please Enter your Number';
+    nameoflogo('GUESS MY NUMBER BOSS');
+    resultchange('please enter the your Number ');
+    bodyclr('black');
+    scoregs(gscore);
+
+    // document.querySelector('.nameoflogo').textContent = 'GUESS MY NUMBER BOSS';
+    // document.querySelector('.result').textContent = 'Please Enter your Number';
     document.querySelector('.inputfild').value = '';
 
-    document.querySelector('body').style.backgroundColor = 'black';
-    document.querySelector('.score').textContent = gscore;
+    // document.querySelector('body').style.backgroundColor = 'black';
+    // document.querySelector('.score').textContent = gscore;
     document.querySelector('.hs-n').textContent = highscore;
   }
 });
 
 // input filed click reset attributesdocme
 document.querySelector('.inputfild').addEventListener('click', function () {
-  document.querySelector('.nameoflogo').textContent = 'GUESS MY NUMBER';
-  document.querySelector('body').style.backgroundColor = 'blue';
+  nameoflogo('No number in the box');
+  bodyclr('blue');
+  resultchange('Enter know  your guess ');
+  // document.querySelector('.nameoflogo').textContent = 'No number in the box ';
+  // document.querySelector('body').style.backgroundColor = 'blue';
   document.querySelector('.inputfild').value = '';
   document.querySelector('.bodyofcon').textContent = '?';
-  document.querySelector('.result').textContent = 'Enter know your guess';
+  // document.querySelector('.result').textContent = 'Enter know your guess';
 });
 
 // ---------------------------------------------------------------------------------------------
